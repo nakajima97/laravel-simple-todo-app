@@ -23,6 +23,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/task', function () {
     return view('task_list');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth'])->name('task');
 
 require __DIR__.'/auth.php';
