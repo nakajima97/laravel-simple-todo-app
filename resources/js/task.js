@@ -16,7 +16,11 @@ const addTask = () => {
 const finishTask = (event) => {
     const parent = event.currentTarget.parentNode;
     const id = parent.dataset.id;
-    console.log(id);
+    axios.post("/task/finish", { id }).then((response) => {
+        if (response.data.result) {
+            alert("タスクを完了しました。");
+        }
+    });
 };
 
 const btnAdd = document.getElementById("addTask");
@@ -30,9 +34,6 @@ btnFinishes.map((btnFinish) => {
     const parent = btnFinish.parentNode;
     const id = parent.dataset.id;
     btnFinish.addEventListener("click", {
-        id,
-        parent,
-        btnFinish,
         handleEvent: finishTask,
     });
 });
