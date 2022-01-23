@@ -32,7 +32,9 @@
                         </div>
                         <!-- delete button -->
                         <div>
-                            <x-task_item />
+                            @foreach ($tasks as $task)
+                                <x-task_item>{{ $task->title }}</x-task_item>
+                            @endforeach
                         </div>
                         <!-- Completed -->
                     </div>

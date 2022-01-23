@@ -1,6 +1,6 @@
 <div class="flex mb-4 items-center">
-    <p class="line-through w-full">
-        Todo list 1
+    <p class="w-full">
+        {{ $slot }}
     </p>
     <button
         class="uppercase p-3 flex items-center bg-gray-500 hover:bg-gray-400 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-10 h-10 ">
