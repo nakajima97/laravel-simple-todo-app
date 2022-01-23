@@ -2316,7 +2316,13 @@ var addTask = function addTask() {
 var finishTask = function finishTask(event) {
   var parent = event.currentTarget.parentNode;
   var id = parent.dataset.id;
-  console.log(id);
+  axios.post("/task/finish", {
+    id: id
+  }).then(function (response) {
+    if (response.data.result) {
+      alert("タスクを完了しました。");
+    }
+  });
 };
 
 var btnAdd = document.getElementById("addTask");
@@ -2326,9 +2332,6 @@ btnFinishes.map(function (btnFinish) {
   var parent = btnFinish.parentNode;
   var id = parent.dataset.id;
   btnFinish.addEventListener("click", {
-    id: id,
-    parent: parent,
-    btnFinish: btnFinish,
     handleEvent: finishTask
   });
 });
