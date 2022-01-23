@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/task', function () {
-    return view('task_list');
-})->middleware(['auth'])->name('task');
+Route::get('/task', [TaskController::class, 'index'])->middleware(['auth'])->name('task');
+Route::post('/task', [TaskController::class, 'index'])->middleware(['auth'])->name('task');
 
 require __DIR__.'/auth.php';
