@@ -23,6 +23,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::get('/task', [TaskController::class, 'index'])->middleware(['auth'])->name('task');
-Route::post('/task', [TaskController::class, 'index'])->middleware(['auth'])->name('task');
+Route::post('/task', [TaskController::class, 'store'])->middleware(['auth'])->name('task');
 
 require __DIR__.'/auth.php';

@@ -15,7 +15,9 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $task = new Task;
-        $task->title = $request->title;
-        $task.save();
+        $task->title = $request->taskTitle;
+        $task->save();
+
+        return ['result' => true, 'message' => '挿入成功'];
     }
 }
