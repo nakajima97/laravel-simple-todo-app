@@ -22,4 +22,14 @@ class TaskController extends Controller
 
         return ['result' => true, 'message' => '挿入成功'];
     }
+
+    public function finish(Request $request)
+    {
+        $id = $request->id;
+        $task = Task::find($id);
+        $task->is_finished = true;
+        $task->save();
+
+        return ['result' => true, 'message' => 'Task is finished !'];
+    }
 }
