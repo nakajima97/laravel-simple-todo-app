@@ -5,7 +5,6 @@ const addTask = () => {
     const taskTitle = input.value;
     console.log({ taskTitle });
     axios.post("/task", { taskTitle }).then((response) => {
-        console.log(response);
         if (response.data.result) {
             alert("タスクの追加に成功しました。");
             input.value = "";
