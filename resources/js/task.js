@@ -19,6 +19,7 @@ const finishTask = (event) => {
     axios.post("/task/finish", { id }).then((response) => {
         if (response.data.result) {
             alert("タスクを完了しました。");
+            location.reload();
         }
     });
 };

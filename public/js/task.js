@@ -2321,6 +2321,7 @@ var finishTask = function finishTask(event) {
   }).then(function (response) {
     if (response.data.result) {
       alert("タスクを完了しました。");
+      location.reload();
     }
   });
 };
