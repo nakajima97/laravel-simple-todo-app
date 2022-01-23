@@ -33,7 +33,8 @@
                         <!-- delete button -->
                         <div>
                             @foreach ($tasks as $task)
-                                <x-task_item>{{ $task->title }}</x-task_item>
+                                <?php $id = $task->id; ?>
+                                <x-task_item :message="$id">{{ $task->title }}</x-task_item>
                             @endforeach
                         </div>
                         <!-- Completed -->

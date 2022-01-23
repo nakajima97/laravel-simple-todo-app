@@ -2313,8 +2313,25 @@ var addTask = function addTask() {
   });
 };
 
-var btn = document.getElementById("addTask");
-btn.addEventListener("click", addTask);
+var finishTask = function finishTask(event) {
+  var parent = event.currentTarget.parentNode;
+  var id = parent.dataset.id;
+  console.log(id);
+};
+
+var btnAdd = document.getElementById("addTask");
+btnAdd.addEventListener("click", addTask);
+var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
+btnFinishes.map(function (btnFinish) {
+  var parent = btnFinish.parentNode;
+  var id = parent.dataset.id;
+  btnFinish.addEventListener("click", {
+    id: id,
+    parent: parent,
+    btnFinish: btnFinish,
+    handleEvent: finishTask
+  });
+});
 })();
 
 /******/ })()

@@ -13,5 +13,26 @@ const addTask = () => {
     });
 };
 
-const btn = document.getElementById("addTask");
-btn.addEventListener("click", addTask);
+const finishTask = (event) => {
+    const parent = event.currentTarget.parentNode;
+    const id = parent.dataset.id;
+    console.log(id);
+};
+
+const btnAdd = document.getElementById("addTask");
+btnAdd.addEventListener("click", addTask);
+
+const btnFinishes = Array.from(
+    document.getElementsByClassName("js-btn-finish")
+);
+
+btnFinishes.map((btnFinish) => {
+    const parent = btnFinish.parentNode;
+    const id = parent.dataset.id;
+    btnFinish.addEventListener("click", {
+        id,
+        parent,
+        btnFinish,
+        handleEvent: finishTask,
+    });
+});
