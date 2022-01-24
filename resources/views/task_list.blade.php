@@ -9,16 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    {{-- tailwindのサンプルここから --}}
-                    <!-- component -->
-                    <!-- This is a simple todo app design using tailwind css -->
                     <div class="bg-white-600 rounded shadow p-6 m-4 w-full ">
                         <div class="mb-4 w-full">
                             <div class="flex mt-4">
                                 <input id="addTaskTitle"
                                     class="border border-gray-800 focus:border-blue-500 rounded w-full py-2 px-3 mr-4 text-black"
                                     placeholder="Add Todo" v-model="msg" />
-                                <!-- Add button -->
                                 <button id="addTask"
                                     class="p-0 w-12 h-10 bg-gray-500 rounded-full hover:bg-gray-400 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
                                     <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20"
@@ -30,16 +26,13 @@
                                 </button>
                             </div>
                         </div>
-                        <!-- delete button -->
                         <div>
                             @foreach ($tasks as $task)
-                                <x-task_item>{{ $task->title }}</x-task_item>
+                                <?php $id = $task->id; ?>
+                                <x-task_item :task="$id">{{ $task->title }}</x-task_item>
                             @endforeach
                         </div>
-                        <!-- Completed -->
                     </div>
-                    <!-- End of file -->
-                    {{-- tailwindのサンプルここまで --}}
                 </div>
             </div>
         </div>

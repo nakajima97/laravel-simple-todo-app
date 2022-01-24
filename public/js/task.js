@@ -2304,8 +2304,6 @@ var addTask = function addTask() {
   axios.post("/task", {
     taskTitle: taskTitle
   }).then(function (response) {
-    console.log(response);
-
     if (response.data.result) {
       alert("タスクの追加に成功しました。");
       input.value = "";
@@ -2313,8 +2311,29 @@ var addTask = function addTask() {
   });
 };
 
-var btn = document.getElementById("addTask");
-btn.addEventListener("click", addTask);
+var finishTask = function finishTask(event) {
+  var parent = event.currentTarget.parentNode;
+  var id = parent.dataset.id;
+  axios.post("/task/finish", {
+    id: id
+  }).then(function (response) {
+    if (response.data.result) {
+      alert("タスクを完了しました。");
+      location.reload();
+    }
+  });
+};
+
+var btnAdd = document.getElementById("addTask");
+btnAdd.addEventListener("click", addTask);
+var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
+btnFinishes.map(function (btnFinish) {
+  var parent = btnFinish.parentNode;
+  var id = parent.dataset.id;
+  btnFinish.addEventListener("click", {
+    handleEvent: finishTask
+  });
+});
 })();
 
 /******/ })()

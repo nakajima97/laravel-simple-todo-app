@@ -9,7 +9,7 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::where('is_finished', false)->get();
 
         return view('task_list', ['tasks' => $tasks]);
     }
@@ -21,5 +21,15 @@ class TaskController extends Controller
         $task->save();
 
         return ['result' => true, 'message' => '挿入成功'];
+    }
+
+    public function finish(Request $request)
+    {
+        $id = $request->id;
+        $task = Task::find($id);
+        $task->is_finished = true;
+        $task->save();
+
+        return ['result' => true, 'message' => 'Task is finished !'];
     }
 }
