@@ -12,7 +12,7 @@
         {{ $slot }}
     </p>
     <button
-        class="uppercase p-3 flex items-center bg-gray-500 hover:bg-gray-400 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-10 h-10">
+        class="js-btn-delete uppercase p-3 flex items-center bg-gray-500 hover:bg-gray-400 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-10 h-10">
         <svg width="32" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"
             style="transform: rotate(360deg);">
             <path d="M12 12h2v12h-2z" fill="currentColor"></path>
