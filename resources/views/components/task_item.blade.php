@@ -1,4 +1,4 @@
-<div class="flex mb-4 items-center" data-id="{{ $message }}">
+<div class="flex mb-4 items-center" data-id="{{ $task }}">
     <button
         class="
     js-btn-finish uppercase p-2 flex items-center bg-red-500 hover:bg-red-400 text-blue-50 max-w-max shadow-sm hover:shadow-lg rounded-full w-10 h-10">

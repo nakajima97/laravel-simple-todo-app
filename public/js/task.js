@@ -2304,8 +2304,6 @@ var addTask = function addTask() {
   axios.post("/task", {
     taskTitle: taskTitle
   }).then(function (response) {
-    console.log(response);
-
     if (response.data.result) {
       alert("タスクの追加に成功しました。");
       input.value = "";

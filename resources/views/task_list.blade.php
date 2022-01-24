@@ -29,7 +29,7 @@
                         <div>
                             @foreach ($tasks as $task)
                                 <?php $id = $task->id; ?>
-                                <x-task_item :message="$id">{{ $task->title }}</x-task_item>
+                                <x-task_item :task="$id">{{ $task->title }}</x-task_item>
                             @endforeach
                         </div>
                     </div>
