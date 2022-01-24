@@ -2054,6 +2054,81 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/task.js":
+/*!******************************!*\
+  !*** ./resources/js/task.js ***!
+  \******************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+var _this = this;
+
+var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
+    axios = _require["default"];
+
+var addTask = function addTask() {
+  var input = document.getElementById("addTaskTitle");
+  var taskTitle = input.value;
+  console.log({
+    taskTitle: taskTitle
+  });
+  axios.post("/task", {
+    taskTitle: taskTitle
+  }).then(function (response) {
+    if (response.data.result) {
+      alert("タスクの追加に成功しました。");
+      input.value = "";
+    }
+  });
+};
+
+var finishTask = function finishTask(event) {
+  var parent = event.currentTarget.parentNode;
+  var id = parent.dataset.id;
+  axios.post("/task/finish", {
+    id: id
+  }).then(function (response) {
+    if (response.data.result) {
+      alert("タスクを完了しました。");
+      location.reload();
+    }
+  });
+};
+
+var deleteTask = function deleteTask(event) {
+  // const parent = event.currentTarget.parentNode;
+  // const id = parent.dataset.id;
+  axios["delete"]("/task", {
+    id: _this.id
+  }).then(function (response) {
+    if (response.data.result) {
+      alert("タスクを削除しました。");
+      location.reload();
+    }
+  });
+};
+
+var btnAdd = document.getElementById("addTask");
+btnAdd.addEventListener("click", addTask);
+var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
+btnFinishes.map(function (btnFinish) {
+  var parent = btnFinish.parentNode;
+  var id = parent.dataset.id;
+  btnFinish.addEventListener("click", {
+    handleEvent: finishTask
+  });
+});
+var btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));
+btnDeletes.map(function (btnDelete) {
+  var parent = btnDelete.parentNode;
+  var id = parent.dataset.id;
+  btnDelete.addEventListener("click", {
+    id: id,
+    handleEvent: deleteTask
+  });
+});
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -2279,62 +2354,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
-(() => {
-/*!******************************!*\
-  !*** ./resources/js/task.js ***!
-  \******************************/
-var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
-    axios = _require["default"];
-
-var addTask = function addTask() {
-  var input = document.getElementById("addTaskTitle");
-  var taskTitle = input.value;
-  console.log({
-    taskTitle: taskTitle
-  });
-  axios.post("/task", {
-    taskTitle: taskTitle
-  }).then(function (response) {
-    if (response.data.result) {
-      alert("タスクの追加に成功しました。");
-      input.value = "";
-    }
-  });
-};
-
-var finishTask = function finishTask(event) {
-  var parent = event.currentTarget.parentNode;
-  var id = parent.dataset.id;
-  axios.post("/task/finish", {
-    id: id
-  }).then(function (response) {
-    if (response.data.result) {
-      alert("タスクを完了しました。");
-      location.reload();
-    }
-  });
-};
-
-var btnAdd = document.getElementById("addTask");
-btnAdd.addEventListener("click", addTask);
-var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
-btnFinishes.map(function (btnFinish) {
-  var parent = btnFinish.parentNode;
-  var id = parent.dataset.id;
-  btnFinish.addEventListener("click", {
-    handleEvent: finishTask
-  });
-});
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./resources/js/task.js");
+/******/ 	
 /******/ })()
 ;

@@ -23,6 +23,17 @@ const finishTask = (event) => {
     });
 };
 
+const deleteTask = (event) => {
+    // const parent = event.currentTarget.parentNode;
+    // const id = parent.dataset.id;
+    axios.delete("/task", { id: this.id }).then((response) => {
+        if (response.data.result) {
+            alert("タスクを削除しました。");
+            location.reload();
+        }
+    });
+};
+
 const btnAdd = document.getElementById("addTask");
 btnAdd.addEventListener("click", addTask);
 
@@ -35,5 +46,16 @@ btnFinishes.map((btnFinish) => {
     const id = parent.dataset.id;
     btnFinish.addEventListener("click", {
         handleEvent: finishTask,
+    });
+});
+
+const btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));
+
+btnDeletes.map((btnDelete) => {
+    const parent = btnDelete.parentNode;
+    const id = parent.dataset.id;
+    btnDelete.addEventListener("click", {
+        id,
+        handleEvent: deleteTask,
     });
 });
