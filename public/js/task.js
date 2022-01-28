@@ -2068,24 +2068,20 @@ var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
 var addTask = function addTask() {
   var input = document.getElementById("addTaskTitle");
   var taskTitle = input.value;
-  console.log({
-    taskTitle: taskTitle
-  });
   axios.post("/task", {
     taskTitle: taskTitle
   }).then(function (response) {
     if (response.data.result) {
       alert("タスクの追加に成功しました。");
       input.value = "";
+      location.reload();
     }
   });
 };
 
 var finishTask = function finishTask(event) {
-  var parent = event.currentTarget.parentNode;
-  var id = parent.dataset.id;
   axios.post("/task/finish", {
-    id: id
+    id: _this.id
   }).then(function (response) {
     if (response.data.result) {
       alert("タスクを完了しました。");
@@ -2095,8 +2091,6 @@ var finishTask = function finishTask(event) {
 };
 
 var deleteTask = function deleteTask(event) {
-  // const parent = event.currentTarget.parentNode;
-  // const id = parent.dataset.id;
   axios["delete"]("/task", {
     id: _this.id
   }).then(function (response) {
@@ -2114,6 +2108,7 @@ btnFinishes.map(function (btnFinish) {
   var parent = btnFinish.parentNode;
   var id = parent.dataset.id;
   btnFinish.addEventListener("click", {
+    id: id,
     handleEvent: finishTask
   });
 });

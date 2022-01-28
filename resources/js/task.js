@@ -7,6 +7,7 @@ const addTask = () => {
         if (response.data.result) {
             alert("タスクの追加に成功しました。");
             input.value = "";
+            location.reload();
         }
     });
 };
