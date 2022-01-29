@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
         return User::factory()
                 ->count(2)
+                ->hasTasks(3)
                 ->create();
     }
 }
