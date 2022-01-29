@@ -14,9 +14,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        return User::factory()
-                ->count(2)
-                ->hasTasks(3)
-                ->create();
+        $password = bcrypt('password');
+
+        User::factory()
+            ->hasTasks(3)
+            ->create(['email' => 'test@test.com', 'password' => $password]);
+
+        User::factory()
+            ->hasTasks(3)
+            ->create(['email' => 'test2@test.com', 'password' => $password]);
     }
 }
