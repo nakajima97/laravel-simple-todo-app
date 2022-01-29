@@ -2072,14 +2072,15 @@ var addTask = function addTask() {
     taskTitle: taskTitle
   }).then(function (response) {
     if (response.data.result) {
-      alert("タスクの追加に成功しました。");
       input.value = "";
       location.reload();
+    } else {
+      alert("タスクの追加に失敗しました。");
     }
   });
 };
 
-var finishTask = function finishTask(event) {
+var finishTask = function finishTask() {
   axios.post("/task/finish", {
     id: _this.id
   }).then(function (response) {
@@ -2090,7 +2091,7 @@ var finishTask = function finishTask(event) {
   });
 };
 
-var deleteTask = function deleteTask(event) {
+var deleteTask = function deleteTask() {
   axios["delete"]("/task", {
     id: _this.id
   }).then(function (response) {

@@ -3,20 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::where('is_finished', false)->get();
+        $id = Auth::id();
+        $tasks = User::find($id)->tasks;
 
         return view('task_list', ['tasks' => $tasks]);
     }
 
     public function store(Request $request)
     {
+        $id = Auth::id();
+
         $task = new Task;
+        $task->user_id = $id;
         $task->title = $request->taskTitle;
         $task->save();
 
