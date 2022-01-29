@@ -15,6 +15,7 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('title', 100);
             $table->boolean('is_finished')->default(false);
             $table->boolean('is_deleted')->default(false);
