@@ -5,14 +5,15 @@ const addTask = () => {
     const taskTitle = input.value;
     axios.post("/task", { taskTitle }).then((response) => {
         if (response.data.result) {
-            alert("タスクの追加に成功しました。");
             input.value = "";
             location.reload();
+        } else {
+            alert("タスクの追加に失敗しました。");
         }
     });
 };
 
-const finishTask = (event) => {
+const finishTask = () => {
     axios.post("/task/finish", { id: this.id }).then((response) => {
         if (response.data.result) {
             alert("タスクを完了しました。");
@@ -21,7 +22,7 @@ const finishTask = (event) => {
     });
 };
 
-const deleteTask = (event) => {
+const deleteTask = () => {
     axios.delete("/task", { id: this.id }).then((response) => {
         if (response.data.result) {
             alert("タスクを削除しました。");
