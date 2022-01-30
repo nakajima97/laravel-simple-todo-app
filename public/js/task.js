@@ -2294,6 +2294,10 @@ var __webpack_exports__ = {};
   \******************************/
 var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
     axios = _require["default"];
+/**
+ * タスクを追加する
+ */
+
 
 var addTask = function addTask() {
   var input = document.getElementById("addTaskTitle");
@@ -2311,6 +2315,12 @@ var addTask = function addTask() {
     }
   });
 };
+/**
+ * idで渡された値のタスクを完了するためのpostをサーバに投げる
+ *
+ * @param {int} id
+ */
+
 
 var finishTask = function finishTask(id) {
   var params = new URLSearchParams();
@@ -2323,6 +2333,12 @@ var finishTask = function finishTask(id) {
     }
   });
 };
+/**
+ * idで渡されたタスクを削除するためのpostをサーバに投げる
+ *
+ * @param {int} id
+ */
+
 
 var deleteTask = function deleteTask(id) {
   var params = new URLSearchParams();
@@ -2334,25 +2350,33 @@ var deleteTask = function deleteTask(id) {
     }
   });
 };
+/**
+ * イベントリスナーを追加する処理をまとめた関数
+ */
 
-var btnAdd = document.getElementById("addTask");
-btnAdd.addEventListener("click", addTask);
-var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
-btnFinishes.map(function (btnFinish) {
-  btnFinish.addEventListener("click", function () {
-    var parent = btnFinish.parentNode;
-    var id = parent.dataset.id;
-    finishTask(id);
+
+var addEventListenerToElement = function addEventListenerToElement() {
+  var btnAdd = document.getElementById("addTask");
+  btnAdd.addEventListener("click", addTask);
+  var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
+  btnFinishes.map(function (btnFinish) {
+    btnFinish.addEventListener("click", function () {
+      var parent = btnFinish.parentNode;
+      var id = parent.dataset.id;
+      finishTask(id);
+    });
   });
-});
-var btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));
-btnDeletes.map(function (btnDelete) {
-  btnDelete.addEventListener("click", function () {
-    var parent = btnDelete.parentNode;
-    var id = parent.dataset.id;
-    deleteTask(id);
+  var btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));
+  btnDeletes.map(function (btnDelete) {
+    btnDelete.addEventListener("click", function () {
+      var parent = btnDelete.parentNode;
+      var id = parent.dataset.id;
+      deleteTask(id);
+    });
   });
-});
+};
+
+addEventListenerToElement();
 })();
 
 /******/ })()
