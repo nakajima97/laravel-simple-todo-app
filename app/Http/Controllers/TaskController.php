@@ -12,7 +12,7 @@ class TaskController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $tasks = User::find($id)->tasks;
+        $tasks = User::find($id)->tasks->where('is_finished', false);
 
         return view('task_list', ['tasks' => $tasks]);
     }

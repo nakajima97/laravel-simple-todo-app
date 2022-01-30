@@ -4,6 +4,7 @@ const addTask = () => {
     const input = document.getElementById("addTaskTitle");
     const taskTitle = input.value;
     axios.post("/task", { taskTitle }).then((response) => {
+        console.log(response);
         if (response.data.result) {
             input.value = "";
             location.reload();
@@ -13,17 +14,23 @@ const addTask = () => {
     });
 };
 
-const finishTask = () => {
-    axios.post("/task/finish", { id: this.id }).then((response) => {
+const finishTask = (id) => {
+    const params = new URLSearchParams();
+    params.append("id", id);
+
+    axios.post("/task/finish", params).then((response) => {
+        console.log(response);
         if (response.data.result) {
-            alert("タスクを完了しました。");
             location.reload();
         }
     });
 };
 
-const deleteTask = () => {
-    axios.delete("/task", { id: this.id }).then((response) => {
+const deleteTask = (id) => {
+    const params = new URLSearchParams();
+    params.append("id", id);
+
+    axios.delete("/task", params).then((response) => {
         if (response.data.result) {
             alert("タスクを削除しました。");
             location.reload();
@@ -39,21 +46,19 @@ const btnFinishes = Array.from(
 );
 
 btnFinishes.map((btnFinish) => {
-    const parent = btnFinish.parentNode;
-    const id = parent.dataset.id;
-    btnFinish.addEventListener("click", {
-        id,
-        handleEvent: finishTask,
+    btnFinish.addEventListener("click", () => {
+        const parent = btnFinish.parentNode;
+        const id = parent.dataset.id;
+        finishTask(id);
     });
 });
 
 const btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));
 
 btnDeletes.map((btnDelete) => {
-    const parent = btnDelete.parentNode;
-    const id = parent.dataset.id;
-    btnDelete.addEventListener("click", {
-        id,
-        handleEvent: deleteTask,
+    btnDelete.addEventListener("click", () => {
+        const parent = btnDelete.parentNode;
+        const id = parent.dataset.id;
+        deleteTask(id);
     });
 });
