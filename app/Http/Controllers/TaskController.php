@@ -12,7 +12,7 @@ class TaskController extends Controller
     public function index()
     {
         $id = Auth::id();
-        $tasks = User::find($id)->tasks->where('is_finished', false);
+        $tasks = User::find($id)->tasks->where('is_finished', false)->where('is_deleted', false);
 
         return view('task_list', ['tasks' => $tasks]);
     }
@@ -27,6 +27,16 @@ class TaskController extends Controller
         $task->save();
 
         return ['result' => true, 'message' => '挿入成功'];
+    }
+
+    public function delete(Request $request)
+    {
+        $id = $request->id;
+        $task = Task::find($id);
+        $task->is_deleted = true;
+        $task-> save();
+
+        return ['result' => true, 'message' => 'Task is deleted !', 'task' => $task, 'id' => $id];
     }
 
     public function finish(Request $request)
