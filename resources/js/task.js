@@ -4,7 +4,7 @@ const { default: axios } = require("axios");
  * タスクを追加する関数
  *
  * @param {string} taskTitle タスクのタイトル
- * @returns {boolean} true：課題の追加に成功　false：課題の追加に失敗
+ * @returns {promise<boolean>} true：課題の追加に成功　false：課題の追加に失敗
  */
 const addTask = (taskTitle) => {
     return axios.post("/task", { taskTitle }).then((response) => {
@@ -20,15 +20,17 @@ const addTask = (taskTitle) => {
  * idで渡された値のタスクを完了するためのpostをサーバに投げる
  *
  * @param {int} id
+ * @returns {boolean} true：課題の完了に成功したらtrue。失敗したらfalse。
  */
 const finishTask = (id) => {
     const params = new URLSearchParams();
     params.append("id", id);
 
-    axios.post("/task/finish", params).then((response) => {
-        console.log(response);
+    return axios.post("/task/finish", params).then((response) => {
         if (response.data.result) {
-            location.reload();
+            return true;
+        } else {
+            return false;
         }
     });
 };
@@ -37,15 +39,17 @@ const finishTask = (id) => {
  * idで渡されたタスクを削除するためのpostをサーバに投げる
  *
  * @param {int} id
+ * @returns {boolean} true：課題の削除に成功したらtrue。失敗したらfalse。
  */
 const deleteTask = (id) => {
     const params = new URLSearchParams();
     params.append("id", id);
 
-    axios.delete("/task", params).then((response) => {
+    return axios.delete("/task", params).then((response) => {
         if (response.data.result) {
-            alert("タスクを削除しました。");
-            location.reload();
+            return true;
+        } else {
+            return false;
         }
     });
 };
@@ -59,12 +63,14 @@ const addEventListenerToElement = () => {
         const input = document.getElementById("addTaskTitle");
         const taskTitle = input.value;
 
-        if (addTask(taskTitle)) {
-            input.value = "";
-            location.reload();
-        } else {
-            alert("タスクの追加に失敗しました。");
-        }
+        addTask(taskTitle).then((res) => {
+            if (res) {
+                input.value = "";
+                location.reload();
+            } else {
+                alert("タスクの追加に失敗しました。");
+            }
+        });
     });
 
     const btnFinishes = Array.from(
@@ -75,7 +81,14 @@ const addEventListenerToElement = () => {
         btnFinish.addEventListener("click", () => {
             const parent = btnFinish.parentNode;
             const id = parent.dataset.id;
-            finishTask(id);
+
+            finishTask(id).then((result) => {
+                if (result) {
+                    location.reload();
+                } else {
+                    alert("タスクの完了に失敗しました。");
+                }
+            });
         });
     });
 
@@ -87,7 +100,14 @@ const addEventListenerToElement = () => {
         btnDelete.addEventListener("click", () => {
             const parent = btnDelete.parentNode;
             const id = parent.dataset.id;
-            deleteTask(id);
+
+            deleteTask(id).then((result) => {
+                if (result) {
+                    location.reload();
+                } else {
+                    alert("タスクの削除に失敗しました。");
+                }
+            });
         });
     });
 };

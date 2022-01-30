@@ -2298,7 +2298,7 @@ var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
  * タスクを追加する関数
  *
  * @param {string} taskTitle タスクのタイトル
- * @returns {boolean} true：課題の追加に成功　false：課題の追加に失敗
+ * @returns {promise<boolean>} true：課題の追加に成功　false：課題の追加に失敗
  */
 
 
@@ -2317,17 +2317,18 @@ var addTask = function addTask(taskTitle) {
  * idで渡された値のタスクを完了するためのpostをサーバに投げる
  *
  * @param {int} id
+ * @returns {boolean} true：課題の完了に成功したらtrue。失敗したらfalse。
  */
 
 
 var finishTask = function finishTask(id) {
   var params = new URLSearchParams();
   params.append("id", id);
-  axios.post("/task/finish", params).then(function (response) {
-    console.log(response);
-
+  return axios.post("/task/finish", params).then(function (response) {
     if (response.data.result) {
-      location.reload();
+      return true;
+    } else {
+      return false;
     }
   });
 };
@@ -2335,16 +2336,18 @@ var finishTask = function finishTask(id) {
  * idで渡されたタスクを削除するためのpostをサーバに投げる
  *
  * @param {int} id
+ * @returns {boolean} true：課題の削除に成功したらtrue。失敗したらfalse。
  */
 
 
 var deleteTask = function deleteTask(id) {
   var params = new URLSearchParams();
   params.append("id", id);
-  axios["delete"]("/task", params).then(function (response) {
+  return axios["delete"]("/task", params).then(function (response) {
     if (response.data.result) {
-      alert("タスクを削除しました。");
-      location.reload();
+      return true;
+    } else {
+      return false;
     }
   });
 };
@@ -2358,20 +2361,27 @@ var addEventListenerToElement = function addEventListenerToElement() {
   btnAdd.addEventListener("click", function () {
     var input = document.getElementById("addTaskTitle");
     var taskTitle = input.value;
-
-    if (addTask(taskTitle)) {
-      input.value = "";
-      location.reload();
-    } else {
-      alert("タスクの追加に失敗しました。");
-    }
+    addTask(taskTitle).then(function (res) {
+      if (res) {
+        input.value = "";
+        location.reload();
+      } else {
+        alert("タスクの追加に失敗しました。");
+      }
+    });
   });
   var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
   btnFinishes.map(function (btnFinish) {
     btnFinish.addEventListener("click", function () {
       var parent = btnFinish.parentNode;
       var id = parent.dataset.id;
-      finishTask(id);
+      finishTask(id).then(function (result) {
+        if (result) {
+          location.reload();
+        } else {
+          alert("タスクの完了に失敗しました。");
+        }
+      });
     });
   });
   var btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));
@@ -2379,7 +2389,13 @@ var addEventListenerToElement = function addEventListenerToElement() {
     btnDelete.addEventListener("click", function () {
       var parent = btnDelete.parentNode;
       var id = parent.dataset.id;
-      deleteTask(id);
+      deleteTask(id).then(function (result) {
+        if (result) {
+          location.reload();
+        } else {
+          alert("タスクの削除に失敗しました。");
+        }
+      });
     });
   });
 };
