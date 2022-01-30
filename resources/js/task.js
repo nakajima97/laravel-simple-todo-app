@@ -45,13 +45,17 @@ const deleteTask = (id) => {
     const params = new URLSearchParams();
     params.append("id", id);
 
-    return axios.delete("/task", params).then((response) => {
-        if (response.data.result) {
-            return true;
-        } else {
-            return false;
-        }
-    });
+    return axios
+        .delete("/task", {
+            data: params,
+        })
+        .then((response) => {
+            if (response.data.result) {
+                return true;
+            } else {
+                return false;
+            }
+        });
 };
 
 /**

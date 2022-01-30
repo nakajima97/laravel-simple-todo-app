@@ -2343,7 +2343,9 @@ var finishTask = function finishTask(id) {
 var deleteTask = function deleteTask(id) {
   var params = new URLSearchParams();
   params.append("id", id);
-  return axios["delete"]("/task", params).then(function (response) {
+  return axios["delete"]("/task", {
+    data: params
+  }).then(function (response) {
     if (response.data.result) {
       return true;
     } else {
