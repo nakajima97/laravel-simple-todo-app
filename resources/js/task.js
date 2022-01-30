@@ -1,7 +1,10 @@
 const { default: axios } = require("axios");
 
 /**
- * タスクを追加する
+ * タスクを追加する関数
+ *
+ * @param {string} taskTitle タスクのタイトル
+ * @returns {boolean} true：課題の追加に成功　false：課題の追加に失敗
  */
 const addTask = (taskTitle) => {
     return axios.post("/task", { taskTitle }).then((response) => {

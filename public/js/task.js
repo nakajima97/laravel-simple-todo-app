@@ -2295,7 +2295,10 @@ var __webpack_exports__ = {};
 var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
     axios = _require["default"];
 /**
- * タスクを追加する
+ * タスクを追加する関数
+ *
+ * @param {string} taskTitle タスクのタイトル
+ * @returns {boolean} true：課題の追加に成功　false：課題の追加に失敗
  */
 
 
