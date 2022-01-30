@@ -2071,6 +2071,8 @@ var addTask = function addTask() {
   axios.post("/task", {
     taskTitle: taskTitle
   }).then(function (response) {
+    console.log(response);
+
     if (response.data.result) {
       input.value = "";
       location.reload();
@@ -2080,18 +2082,19 @@ var addTask = function addTask() {
   });
 };
 
-var finishTask = function finishTask() {
-  axios.post("/task/finish", {
-    id: _this.id
-  }).then(function (response) {
+var finishTask = function finishTask(id) {
+  var params = new URLSearchParams();
+  params.append("id", id);
+  axios.post("/task/finish", params).then(function (response) {
+    console.log(response);
+
     if (response.data.result) {
-      alert("タスクを完了しました。");
       location.reload();
     }
   });
 };
 
-var deleteTask = function deleteTask() {
+var deleteTask = function deleteTask(event) {
   axios["delete"]("/task", {
     id: _this.id
   }).then(function (response) {
@@ -2106,11 +2109,10 @@ var btnAdd = document.getElementById("addTask");
 btnAdd.addEventListener("click", addTask);
 var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
 btnFinishes.map(function (btnFinish) {
-  var parent = btnFinish.parentNode;
-  var id = parent.dataset.id;
-  btnFinish.addEventListener("click", {
-    id: id,
-    handleEvent: finishTask
+  btnFinish.addEventListener("click", function () {
+    var parent = btnFinish.parentNode;
+    var id = parent.dataset.id;
+    finishTask(id);
   });
 });
 var btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));

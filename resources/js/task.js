@@ -4,6 +4,7 @@ const addTask = () => {
     const input = document.getElementById("addTaskTitle");
     const taskTitle = input.value;
     axios.post("/task", { taskTitle }).then((response) => {
+        console.log(response);
         if (response.data.result) {
             input.value = "";
             location.reload();
@@ -13,16 +14,18 @@ const addTask = () => {
     });
 };
 
-const finishTask = () => {
-    axios.post("/task/finish", { id: this.id }).then((response) => {
+const finishTask = (id) => {
+    const params = new URLSearchParams();
+    params.append("id", id);
+    axios.post("/task/finish", params).then((response) => {
+        console.log(response);
         if (response.data.result) {
-            alert("タスクを完了しました。");
             location.reload();
         }
     });
 };
 
-const deleteTask = () => {
+const deleteTask = (event) => {
     axios.delete("/task", { id: this.id }).then((response) => {
         if (response.data.result) {
             alert("タスクを削除しました。");
@@ -39,11 +42,10 @@ const btnFinishes = Array.from(
 );
 
 btnFinishes.map((btnFinish) => {
-    const parent = btnFinish.parentNode;
-    const id = parent.dataset.id;
-    btnFinish.addEventListener("click", {
-        id,
-        handleEvent: finishTask,
+    btnFinish.addEventListener("click", () => {
+        const parent = btnFinish.parentNode;
+        const id = parent.dataset.id;
+        finishTask(id);
     });
 });
 
