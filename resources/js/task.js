@@ -17,6 +17,7 @@ const addTask = () => {
 const finishTask = (id) => {
     const params = new URLSearchParams();
     params.append("id", id);
+
     axios.post("/task/finish", params).then((response) => {
         console.log(response);
         if (response.data.result) {
@@ -25,8 +26,11 @@ const finishTask = (id) => {
     });
 };
 
-const deleteTask = (event) => {
-    axios.delete("/task", { id: this.id }).then((response) => {
+const deleteTask = (id) => {
+    const params = new URLSearchParams();
+    params.append("id", id);
+
+    axios.delete("/task", params).then((response) => {
         if (response.data.result) {
             alert("タスクを削除しました。");
             location.reload();
@@ -52,10 +56,9 @@ btnFinishes.map((btnFinish) => {
 const btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));
 
 btnDeletes.map((btnDelete) => {
-    const parent = btnDelete.parentNode;
-    const id = parent.dataset.id;
-    btnDelete.addEventListener("click", {
-        id,
-        handleEvent: deleteTask,
+    btnDelete.addEventListener("click", () => {
+        const parent = btnDelete.parentNode;
+        const id = parent.dataset.id;
+        deleteTask(id);
     });
 });
