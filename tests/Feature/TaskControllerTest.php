@@ -45,7 +45,7 @@ class TaskControllerTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $param = ['taskTitle' => 'test'];
+        $param = ['title' => 'test'];
 
         $response = $this->actingAs($user)
                          ->withSession(['banned' => false])

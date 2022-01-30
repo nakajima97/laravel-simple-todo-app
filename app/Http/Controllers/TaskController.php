@@ -23,7 +23,7 @@ class TaskController extends Controller
 
         $task = new Task;
         $task->user_id = $id;
-        $task->title = $request->taskTitle;
+        $task->title = $request->title;
         $task->save();
 
         return ['result' => true, 'message' => '挿入成功'];
