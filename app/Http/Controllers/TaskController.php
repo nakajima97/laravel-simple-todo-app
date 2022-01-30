@@ -36,7 +36,7 @@ class TaskController extends Controller
         $task->is_deleted = true;
         $task-> save();
 
-        return ['result' => true, 'message' => 'Task is deleted !', 'task' => $task, 'id' => $id];
+        return ['result' => true, 'message' => 'Task is deleted !'];
     }
 
     public function finish(Request $request)
