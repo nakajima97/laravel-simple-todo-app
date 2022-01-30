@@ -1,64 +1,115 @@
 const { default: axios } = require("axios");
 
-const addTask = () => {
-    const input = document.getElementById("addTaskTitle");
-    const taskTitle = input.value;
-    axios.post("/task", { taskTitle }).then((response) => {
-        console.log(response);
+/**
+ * タスクを追加する関数
+ *
+ * @param {string} taskTitle タスクのタイトル
+ * @returns {Promise} Promise<Boolean> 成功したらtrue。失敗したらfalse
+ */
+const addTask = (taskTitle) => {
+    return axios.post("/task", { taskTitle }).then((response) => {
         if (response.data.result) {
-            input.value = "";
-            location.reload();
+            return true;
         } else {
-            alert("タスクの追加に失敗しました。");
+            return false;
         }
     });
 };
 
+/**
+ * idで渡された値のタスクを完了するためのpostをサーバに投げる
+ *
+ * @param {int} id
+ * @returns {Promise} Promise<Boolean> 成功したらtrue。失敗したらfalse
+ */
 const finishTask = (id) => {
     const params = new URLSearchParams();
     params.append("id", id);
 
-    axios.post("/task/finish", params).then((response) => {
-        console.log(response);
+    return axios.post("/task/finish", params).then((response) => {
         if (response.data.result) {
-            location.reload();
+            return true;
+        } else {
+            return false;
         }
     });
 };
 
+/**
+ * idで渡されたタスクを削除するためのpostをサーバに投げる
+ *
+ * @param {int} id
+ * @returns {Promise} Promise<Boolean> 成功したらtrue。失敗したらfalse
+ */
 const deleteTask = (id) => {
     const params = new URLSearchParams();
     params.append("id", id);
 
-    axios.delete("/task", params).then((response) => {
+    return axios.delete("/task", params).then((response) => {
         if (response.data.result) {
-            alert("タスクを削除しました。");
-            location.reload();
+            return true;
+        } else {
+            return false;
         }
     });
 };
 
-const btnAdd = document.getElementById("addTask");
-btnAdd.addEventListener("click", addTask);
+/**
+ * イベントリスナーを追加する処理をまとめた関数
+ */
+const addEventListenerToElement = () => {
+    const btnAdd = document.getElementById("addTask");
+    btnAdd.addEventListener("click", () => {
+        const input = document.getElementById("addTaskTitle");
+        const taskTitle = input.value;
 
-const btnFinishes = Array.from(
-    document.getElementsByClassName("js-btn-finish")
-);
-
-btnFinishes.map((btnFinish) => {
-    btnFinish.addEventListener("click", () => {
-        const parent = btnFinish.parentNode;
-        const id = parent.dataset.id;
-        finishTask(id);
+        addTask(taskTitle).then((res) => {
+            if (res) {
+                input.value = "";
+                location.reload();
+            } else {
+                alert("タスクの追加に失敗しました。");
+            }
+        });
     });
-});
 
-const btnDeletes = Array.from(document.getElementsByClassName("js-btn-delete"));
+    const btnFinishes = Array.from(
+        document.getElementsByClassName("js-btn-finish")
+    );
 
-btnDeletes.map((btnDelete) => {
-    btnDelete.addEventListener("click", () => {
-        const parent = btnDelete.parentNode;
-        const id = parent.dataset.id;
-        deleteTask(id);
+    btnFinishes.map((btnFinish) => {
+        btnFinish.addEventListener("click", () => {
+            const parent = btnFinish.parentNode;
+            const id = parent.dataset.id;
+
+            finishTask(id).then((result) => {
+                if (result) {
+                    location.reload();
+                } else {
+                    alert("タスクの完了に失敗しました。");
+                }
+            });
+        });
     });
-});
+
+    const btnDeletes = Array.from(
+        document.getElementsByClassName("js-btn-delete")
+    );
+
+    btnDeletes.map((btnDelete) => {
+        btnDelete.addEventListener("click", () => {
+            const parent = btnDelete.parentNode;
+            const id = parent.dataset.id;
+
+            deleteTask(id).then((result) => {
+                if (result) {
+                    location.reload();
+                } else {
+                    alert("タスクの削除に失敗しました。");
+                }
+            });
+        });
+    });
+};
+
+addEventListenerToElement();
