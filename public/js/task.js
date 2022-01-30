@@ -2299,19 +2299,14 @@ var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
  */
 
 
-var addTask = function addTask() {
-  var input = document.getElementById("addTaskTitle");
-  var taskTitle = input.value;
-  axios.post("/task", {
+var addTask = function addTask(taskTitle) {
+  return axios.post("/task", {
     taskTitle: taskTitle
   }).then(function (response) {
-    console.log(response);
-
     if (response.data.result) {
-      input.value = "";
-      location.reload();
+      return true;
     } else {
-      alert("タスクの追加に失敗しました。");
+      return false;
     }
   });
 };
@@ -2357,7 +2352,17 @@ var deleteTask = function deleteTask(id) {
 
 var addEventListenerToElement = function addEventListenerToElement() {
   var btnAdd = document.getElementById("addTask");
-  btnAdd.addEventListener("click", addTask);
+  btnAdd.addEventListener("click", function () {
+    var input = document.getElementById("addTaskTitle");
+    var taskTitle = input.value;
+
+    if (addTask(taskTitle)) {
+      input.value = "";
+      location.reload();
+    } else {
+      alert("タスクの追加に失敗しました。");
+    }
+  });
   var btnFinishes = Array.from(document.getElementsByClassName("js-btn-finish"));
   btnFinishes.map(function (btnFinish) {
     btnFinish.addEventListener("click", function () {

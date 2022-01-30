@@ -3,16 +3,12 @@ const { default: axios } = require("axios");
 /**
  * タスクを追加する
  */
-const addTask = () => {
-    const input = document.getElementById("addTaskTitle");
-    const taskTitle = input.value;
-    axios.post("/task", { taskTitle }).then((response) => {
-        console.log(response);
+const addTask = (taskTitle) => {
+    return axios.post("/task", { taskTitle }).then((response) => {
         if (response.data.result) {
-            input.value = "";
-            location.reload();
+            return true;
         } else {
-            alert("タスクの追加に失敗しました。");
+            return false;
         }
     });
 };
@@ -56,7 +52,17 @@ const deleteTask = (id) => {
  */
 const addEventListenerToElement = () => {
     const btnAdd = document.getElementById("addTask");
-    btnAdd.addEventListener("click", addTask);
+    btnAdd.addEventListener("click", () => {
+        const input = document.getElementById("addTaskTitle");
+        const taskTitle = input.value;
+
+        if (addTask(taskTitle)) {
+            input.value = "";
+            location.reload();
+        } else {
+            alert("タスクの追加に失敗しました。");
+        }
+    });
 
     const btnFinishes = Array.from(
         document.getElementsByClassName("js-btn-finish")
