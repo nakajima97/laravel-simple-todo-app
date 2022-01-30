@@ -2298,7 +2298,7 @@ var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
  * タスクを追加する関数
  *
  * @param {string} taskTitle タスクのタイトル
- * @returns {promise<boolean>} true：課題の追加に成功　false：課題の追加に失敗
+ * @returns {Promise} Promise<Boolean> 成功したらtrue。失敗したらfalse
  */
 
 
@@ -2317,7 +2317,7 @@ var addTask = function addTask(taskTitle) {
  * idで渡された値のタスクを完了するためのpostをサーバに投げる
  *
  * @param {int} id
- * @returns {boolean} true：課題の完了に成功したらtrue。失敗したらfalse。
+ * @returns {Promise} Promise<Boolean> 成功したらtrue。失敗したらfalse
  */
 
 
@@ -2336,7 +2336,7 @@ var finishTask = function finishTask(id) {
  * idで渡されたタスクを削除するためのpostをサーバに投げる
  *
  * @param {int} id
- * @returns {boolean} true：課題の削除に成功したらtrue。失敗したらfalse。
+ * @returns {Promise} Promise<Boolean> 成功したらtrue。失敗したらfalse
  */
 
 
