@@ -16,7 +16,7 @@ class TaskControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->create();
+        $this->user = User::factory()->hasTasks(3)->create();
     }
 
     /**
@@ -55,6 +55,17 @@ class TaskControllerTest extends TestCase
                          ->withSession(['banned' => false])
                          ->post('/task', $param);
         
+        $response->assertStatus(200);
+    }
+
+    public function test_can_delete_task()
+    {
+        $param = ['id' => 1];
+
+        $response = $this->actingAs($this->user)
+                        ->withSession(['banned' => false])
+                        ->delete('/task', $param);
+
         $response->assertStatus(200);
     }
 }

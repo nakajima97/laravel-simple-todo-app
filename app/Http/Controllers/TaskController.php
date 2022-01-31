@@ -33,6 +33,11 @@ class TaskController extends Controller
     {
         $id = $request->id;
         $task = Task::find($id);
+
+        if ($task === null) {
+            return ['result' => false, 'message' => "Task don't find !"];
+        }
+
         $task->is_deleted = true;
         $task-> save();
 
