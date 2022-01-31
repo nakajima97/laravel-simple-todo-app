@@ -16,19 +16,7 @@ class TaskControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->hasTasks(3)->create();
-    }
-
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        $this->user = User::factory()->hasTasks(['title' => "test task"])->create();
     }
 
     public function test_cant_access_task_list()
