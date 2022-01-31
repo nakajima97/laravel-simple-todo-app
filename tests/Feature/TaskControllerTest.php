@@ -32,7 +32,7 @@ class TaskControllerTest extends TestCase
                          ->withSession(['banned' => false])
                          ->get('/task');
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)->assertSee('test task');
     }
 
     public function test_can_add_task()
