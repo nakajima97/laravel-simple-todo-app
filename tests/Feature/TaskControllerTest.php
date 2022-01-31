@@ -49,8 +49,6 @@ class TaskControllerTest extends TestCase
 
     public function test_can_add_task()
     {
-        $user = User::factory()->create();
-
         $param = ['title' => 'test'];
 
         $response = $this->actingAs($this->user)
