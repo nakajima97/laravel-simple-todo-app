@@ -40,4 +40,17 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_can_add_task()
+    {
+        $user = User::factory()->create();
+
+        $param = ['title' => 'test'];
+
+        $response = $this->actingAs($user)
+                         ->withSession(['banned' => false])
+                         ->post('/task', $param);
+        
+        $response->assertStatus(200);
+    }
 }

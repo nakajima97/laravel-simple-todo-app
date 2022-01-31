@@ -3,11 +3,11 @@ const { default: axios } = require("axios");
 /**
  * タスクを追加する関数
  *
- * @param {string} taskTitle タスクのタイトル
+ * @param {string} title タスクのタイトル
  * @returns {Promise} Promise<Boolean> 成功したらtrue。失敗したらfalse
  */
-const addTask = (taskTitle) => {
-    return axios.post("/task", { taskTitle }).then((response) => {
+const addTask = (title) => {
+    return axios.post("/task", { title }).then((response) => {
         if (response.data.result) {
             return true;
         } else {
