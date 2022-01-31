@@ -11,16 +11,12 @@ class TaskControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_example()
-    {
-        $response = $this->get('/');
+    private $user;
 
-        $response->assertStatus(200);
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->hasTasks(['id' => 1, 'title' => "test task"])->create();
     }
 
     public function test_cant_access_task_list()
@@ -32,25 +28,32 @@ class TaskControllerTest extends TestCase
 
     public function test_can_access_task_list()
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
                          ->withSession(['banned' => false])
                          ->get('/task');
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)->assertSee('test task');
     }
 
     public function test_can_add_task()
     {
-        $user = User::factory()->create();
-
         $param = ['title' => 'test'];
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
                          ->withSession(['banned' => false])
                          ->post('/task', $param);
         
         $response->assertStatus(200);
+    }
+
+    public function test_can_delete_task()
+    {
+        $param = ['id' => '1'];
+
+        $response = $this->actingAs($this->user)
+                        ->withSession(['banned' => false])
+                        ->delete('/task', $param);
+
+        $response->assertStatus(200)->assertDontSee('test task');
     }
 }

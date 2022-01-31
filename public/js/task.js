@@ -2297,14 +2297,14 @@ var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")
 /**
  * タスクを追加する関数
  *
- * @param {string} taskTitle タスクのタイトル
+ * @param {string} title タスクのタイトル
  * @returns {Promise} Promise<Boolean> 成功したらtrue。失敗したらfalse
  */
 
 
-var addTask = function addTask(taskTitle) {
+var addTask = function addTask(title) {
   return axios.post("/task", {
-    taskTitle: taskTitle
+    title: title
   }).then(function (response) {
     if (response.data.result) {
       return true;
