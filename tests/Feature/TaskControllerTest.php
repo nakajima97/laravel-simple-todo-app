@@ -11,6 +11,14 @@ class TaskControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    private $user;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+    }
+
     /**
      * A basic feature test example.
      *
@@ -32,9 +40,7 @@ class TaskControllerTest extends TestCase
 
     public function test_can_access_task_list()
     {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
                          ->withSession(['banned' => false])
                          ->get('/task');
 
@@ -47,7 +53,7 @@ class TaskControllerTest extends TestCase
 
         $param = ['title' => 'test'];
 
-        $response = $this->actingAs($user)
+        $response = $this->actingAs($this->user)
                          ->withSession(['banned' => false])
                          ->post('/task', $param);
         
