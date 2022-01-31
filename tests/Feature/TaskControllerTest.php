@@ -16,7 +16,7 @@ class TaskControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->user = User::factory()->hasTasks(['title' => "test task"])->create();
+        $this->user = User::factory()->hasTasks(['id' => 1, 'title' => "test task"])->create();
     }
 
     public function test_cant_access_task_list()
@@ -48,12 +48,12 @@ class TaskControllerTest extends TestCase
 
     public function test_can_delete_task()
     {
-        $param = ['id' => 1];
+        $param = ['id' => '1'];
 
         $response = $this->actingAs($this->user)
                         ->withSession(['banned' => false])
                         ->delete('/task', $param);
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)->assertDontSee('test task');
     }
 }
