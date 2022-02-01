@@ -21,17 +21,21 @@ class TaskController extends Controller
     {
         $id = Auth::id();
 
+        if (isset($request->title)) {
+            return ['result' => false, 'message' => 'Invalid parameters.'];
+        }
+
         $task = new Task;
         $task->user_id = $id;
         $task->title = $request->title;
         $task->save();
 
-        return ['result' => true, 'message' => '挿入成功'];
+        return ['result' => true, 'message' => 'Successful !'];
     }
 
     public function delete(Request $request)
     {
-        $id = $request->id;
+        $id = $request->id ?? -1;
         $task = Task::find($id);
 
         if ($task === null) {
@@ -46,8 +50,13 @@ class TaskController extends Controller
 
     public function finish(Request $request)
     {
-        $id = $request->id;
+        $id = $request->id ?? -1;
         $task = Task::find($id);
+
+        if ($task === null) {
+            return ['result' => false, 'message' => "Task don't find !"];
+        }
+
         $task->is_finished = true;
         $task->save();
 
