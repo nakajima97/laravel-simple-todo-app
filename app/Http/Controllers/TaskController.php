@@ -30,7 +30,7 @@ class TaskController extends Controller
         $task->title = $request->title;
         $task->save();
 
-        return ['result' => true, 'message' => '挿入成功'];
+        return ['result' => true, 'message' => 'Successful !'];
     }
 
     public function delete(Request $request)
